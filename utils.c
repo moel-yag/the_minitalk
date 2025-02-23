@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:15:07 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/02/23 12:23:55 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/02/23 13:29:22 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,16 @@ void	send_bit(int pid, char bit)
 	usleep(10000);
 }
 
-
-void    send_char(int pid, char c)
+void	send_char(int pid, char c)
 {
-	int    i;
+	int	i;
 
-    i = 0;
-    while (i < 8)
-    {
-        send_bit(pid, (c >> i) & 1);
-        i++;
-    }
+	i = 0;
+	while (i < 8)
+	{
+		send_bit(pid, (c >> i) & 1);
+		i++;
+	}
 }
 
 long	ft_atol(const char *str)

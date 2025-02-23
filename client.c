@@ -18,8 +18,9 @@ static void	send_bit(int pid, char bit)
 		kill(pid, SIGUSR1);
 	else
 		kill(pid, SIGUSR2);
-	usleep(100); // Small delay to avoid signal loss
+	usleep(100);
 }
+// Small delay to avoid signal loss
 
 static void	send_char(int pid, char c)
 {
@@ -50,6 +51,6 @@ int	main(int argc, char **argv)
 		send_char(pid, argv[2][i]);
 		i++;
 	}
-	send_char(pid, '\0'); // Send null terminator
+	send_char(pid, '\0');
 	return (0);
 }

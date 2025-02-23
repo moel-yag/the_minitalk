@@ -27,7 +27,7 @@ static void	handle_signal(int sig, siginfo_t *info, void *context)
 		bit_count = 0;
 		c = 0;
 	}
-	kill(info->si_pid, SIGUSR1); // Acknowledge receipt
+	kill(info->si_pid, SIGUSR1);
 }
 
 int	main(void)
