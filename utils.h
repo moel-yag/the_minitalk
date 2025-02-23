@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:15:39 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/02/23 12:17:44 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/02/23 12:24:14 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@
 #include <signal.h>
 #include <string.h>
 
-#define BUFFER_SIZE 1024
+// #define BUFFER_SIZE 1024
 
 
 void    send_bit(int pid, char bit);
 void    send_char(int pid, char c);
 void    handle_signal(int sig, siginfo_t *info, void *context);
+long	ft_atol(const char *str);
 
 #endif
