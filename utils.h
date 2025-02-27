@@ -6,7 +6,7 @@
 /*   By: moel-yag <moel-yag@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:15:39 by moel-yag          #+#    #+#             */
-/*   Updated: 2025/02/23 13:25:58 by moel-yag         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:40:53 by moel-yag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,17 @@
 # include <unistd.h>
 # include <signal.h>
 # include <string.h>
+# include "ft_printf/ft_printf.h"
 
 // #define BUFFER_SIZE 1024
 
-void	send_bit(int pid, char bit);
-void	send_char(int pid, char c);
-void	handle_signal(int sig, siginfo_t *info, void *context);
+typedef struct  s_data
+{
+	int     pid;
+	char    *message;
+	int     size;
+}               t_data;
+
 long	ft_atol(const char *str);
 
 #endif

@@ -1,10 +1,13 @@
 NAME = minitalk
 CLIENT = client
 SERVER = server
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+
 SRC_CLIENT = client.c utils.c
 SRC_SERVER = server.c utils.c
+
 OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
 OBJ_SERVER = $(SRC_SERVER:.c=.o)
 

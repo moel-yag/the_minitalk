@@ -44,7 +44,7 @@ int	main(int argc, char **argv)
 		ft_printf("Usage: %s <server_pid> <string>\n", argv[0]);
 		return (1);
 	}
-	pid = ft_atoi(argv[1]);
+	pid = ft_atol(argv[1]);
 	i = 0;
 	while (argv[2][i])
 	{
