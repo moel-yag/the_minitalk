@@ -6,7 +6,7 @@ PRINTF = ft_printf/
 FT_PRINTF = ft_printf/libftprintf.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 SRC_CLIENT = client.c utils.c
 SRC_SERVER = server.c utils.c

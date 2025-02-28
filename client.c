@@ -12,45 +12,110 @@
 
 #include "utils.h"
 
-static void	send_bit(int pid, char bit)
+static void send_bit(int pid, char bit)
 {
-	if (bit == 0)
-		kill(pid, SIGUSR1);
-	else
-		kill(pid, SIGUSR2);
-	usleep(100);
-}
-// Small delay to avoid signal loss
-
-static void	send_char(int pid, char c)
-{
-	int	i;
-
-	i = 0;
-	while (i < 8)
-	{
-		send_bit(pid, (c >> i) & 1);
-		i++;
-	}
+    if (bit == 0)
+    {
+        // ft_printf("Sent signal SIGUSR1\n");
+        kill(pid, SIGUSR1);
+    }
+    else
+    {
+        // ft_printf("Sent signal SIGUSR2\n");
+        kill(pid, SIGUSR2);
+    }
+    usleep(100);  // Small delay to avoid overwhelming the server
 }
 
-int	main(int argc, char **argv)
+static void send_char(int pid, char c)
 {
-	int	pid;
-	int	i;
+    int i;
 
-	if (argc != 3)
-	{
-		ft_printf("Usage: %s <server_pid> <string>\n", argv[0]);
-		return (1);
-	}
-	pid = ft_atol(argv[1]);
-	i = 0;
-	while (argv[2][i])
-	{
-		send_char(pid, argv[2][i]);
-		i++;
-	}
-	send_char(pid, '\0');
-	return (0);
+    i = 0;
+    while (i < 8)
+    {
+        send_bit(pid, (c >> i) & 1);
+        i++;
+    }
 }
+
+int main(int argc, char **argv)
+{
+    int pid;
+    int i;
+
+    if (argc != 3)
+    {
+        ft_printf("Usage: %s <PID> <message>\n", argv[0]);
+        return (1);
+    }
+
+    pid = ft_atol(argv[1]);
+    i = 0;
+    while (argv[2][i])
+    {
+        send_char(pid, argv[2][i]);
+        i++;
+    }
+
+    send_char(pid, '\0');
+    return (0);
+}
+
+
+// static void	send_bit(int pid, char bit)
+// {
+// 	if (bit == 0)
+// 	{
+// 		// ft_printf("Sent signal SIGUSR1\n");
+// 		if (kill(pid, SIGUSR1) == -1)
+// 		{
+// 			ft_printf("Error sending SIGUSR1 to PID %d\n", pid);
+// 			return ;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		// ft_printf("Sent signal SIGUSR2\n");
+// 		if (kill(pid, SIGUSR2) == -1)
+// 		{
+// 			ft_printf("Error sending SIGUSR2 to PID %d\n", pid);
+// 			return ;
+// 		}
+// 	}
+// 	usleep(100);
+// }
+
+// static void	send_char(int pid, char c)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < 8)
+// 	{
+// 		send_bit(pid, ((c >> i) & 1));
+// 		i++;
+// 	}
+// }
+
+// int	main(int argc, char **argv)
+// {
+// 	int	pid;
+// 	int	i;
+
+// 	if (argc != 3)
+// 	{
+// 		ft_printf("Usage: %s <PID> <message>.\n", argv[0]);
+// 		return (1);
+// 	}
+
+// 	pid = ft_atol(argv[1]);
+// 	i = 0;
+// 	while (argv[2][i])
+// 	{
+// 		send_char(pid, argv[2][i]);
+// 		i++;
+// 	}
+// 	send_char(pid, '\0');
+// 	return (0);
+// }
