@@ -12,40 +12,42 @@
 
 #include "utils.h"
 
-void    conv_bit(unsigned char my_bit, int pid)
+void	send_bit_of_byte(unsigned char my_bit, int pid)
 {
-    int bit;
-    int i = 7;
+	int	bit;
+	int	i;
 
-    while (i>= 0)
-    {
-        bit = (my_bit >> i) & 1;
-        if (bit == 0)
-            kill(pid, SIGUSR1);
-        else
-            kill(pid, SIGUSR2);
-        i--;
-        usleep(500);
-    }
+	i = 7;
+	while (i >= 0)
+	{
+		bit = (my_bit >> i) & 1;
+		if (bit == 0)
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		i--;
+		usleep(500);
+	}
 }
 
-void    send_bit(char *str, int pid)
+void	send_string_bits(char *str, int pid)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        conv_bit(str[i], pid);
-        i++;
-    }
+	i = 0;
+	while (str[i])
+	{
+		send_bit_of_byte(str[i], pid);
+		i++;
+	}
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    int pid;
-    if (ac != 3)
-        return (0);
-    pid = ft_atol(av[1]);
-    send_bit(av[2], pid);
+	int	pid;
+
+	if (ac != 3)
+		return (0);
+	pid = ft_atol(av[1]);
+	send_string_bits(av[2], pid);
 }

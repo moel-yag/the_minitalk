@@ -1,0 +1,56 @@
+#include "utils.h"
+
+// Function to send each bit of a byte to the target process
+void send_bit_for_byte(unsigned char byte, int pid)
+{
+    int bit;
+    int i = 7; // Start with the most significant bit
+
+    // Loop through each bit of the byte from MSB to LSB
+    while (i >= 0)
+    {
+        // Extract the current bit using bit-shifting and masking
+        bit = (byte >> i) & 1;
+
+        // Send SIGUSR1 for bit 0 and SIGUSR2 for bit 1
+        if (bit == 0)
+            kill(pid, SIGUSR1);
+        else
+            kill(pid, SIGUSR2);
+
+        i--; // Move to the next bit
+        usleep(500); // Sleep for 500 microseconds to allow signal transmission
+    }
+}
+
+// Function to send each character in a string as a sequence of bits to the target process
+void send_string_bits(char *str, int pid)
+{
+    int i = 0;
+
+    // Loop through each character of the string
+    while (str[i])
+    {
+        // Send the current character as bits to the target process
+        send_bit_for_byte(str[i], pid);
+        i++; // Move to the next character
+    }
+}
+
+// Main function to process input and initiate signal sending
+int main(int argc, char **argv)
+{
+    int pid;
+
+    // Ensure the correct number of arguments are provided
+    if (argc != 3)
+        return 0; // Return if arguments are incorrect (program usage)
+
+    // Convert the first argument to a process ID (PID)
+    pid = ft_atol(argv[1]);
+
+    // Send the string (second argument) as a sequence of bits to the process
+    send_string_bits(argv[2], pid);
+
+    return 0; // Return 0, though this point will never be reached
+}

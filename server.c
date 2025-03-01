@@ -14,7 +14,7 @@
 
 t_data	g_data;
 
-void	sig_handler(int sig)
+void	signal_handler(int sig)
 {
 	if (sig == SIGUSR1)
 	{
@@ -27,7 +27,6 @@ void	sig_handler(int sig)
 		g_data.res |= 1;
 		g_data.counter++;
 	}
-
 	if (g_data.counter == 8)
 	{
 		write(1, &g_data.res, 1);
@@ -36,7 +35,7 @@ void	sig_handler(int sig)
 	}
 }
 
-int	main()
+int	main(void)
 {
 	int	pid;
 
@@ -45,7 +44,9 @@ int	main()
 	g_data.counter = 0;
 	pid = getpid();
 	ft_printf("%d\n", pid);
-	signal(SIGUSR1, sig_handler);
-	signal(SIGUSR2, sig_handler);
-	while(1);
+	signal(SIGUSR1, signal_handler);
+	signal(SIGUSR2, signal_handler);
+	while (1);
+
+	return (0);	
 }

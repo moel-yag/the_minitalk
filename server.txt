@@ -1,0 +1,46 @@
+#include "utils.h"
+
+t_data g_data; // Global variable to hold data
+
+// Signal handler function for SIGUSR1 and SIGUSR2
+void signal_handler(int signal)
+{
+    // Shift the result to the left for both signals
+    g_data.res <<= 1;
+
+    if (signal == SIGUSR2)
+    {
+        // If the signal is SIGUSR2, set the least significant bit
+        g_data.res |= 1;
+    }
+
+    // Increment the bit counter
+    g_data.counter++;
+
+    // If 8 bits have been received, write the result
+    if (g_data.counter == 8)
+    {
+        write(1, &g_data.res, 1); // Output the received byte
+        g_data.counter = 0;        // Reset the counter
+        g_data.res = 0;            // Reset the result
+    }
+}
+
+int main(void)
+{
+    int pid = getpid(); // Get the process ID
+
+    g_data.res = 0;     // Initialize result to 0
+    g_data.counter = 0; // Initialize counter to 0
+
+    ft_printf("%d\n", pid); // Print the process ID
+
+    // Set up signal handlers for SIGUSR1 and SIGUSR2
+    signal(SIGUSR1, signal_handler);
+    signal(SIGUSR2, signal_handler);
+
+    // Infinite loop to keep the program running and receive signals
+    while (1);
+
+    return 0; // Return 0 (though this point will never be reached)
+}
