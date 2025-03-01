@@ -17,16 +17,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <signal.h>
-# include <string.h>
 # include "ft_printf/ft_printf.h"
-
-// #define BUFFER_SIZE 1024
 
 typedef struct  s_data
 {
-	int     pid;
-	char    *message;
-	int     size;
+	unsigned char	res;
+	int				counter;
 }               t_data;
 
 long	ft_atol(const char *str);

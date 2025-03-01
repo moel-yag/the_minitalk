@@ -12,37 +12,40 @@
 
 #include "utils.h"
 
+t_data	g_data;
 
-
-static void	handle_signal(int sig, siginfo_t *info, void *context)
+void	sig_handler(int sig)
 {
-	static int				bit_count = 0;
-	static unsigned char	c = 0;
-
-	(void)context;
 	if (sig == SIGUSR1)
-		c |= (1 << bit_count);
-	bit_count++;
-	if (bit_count == 8)
 	{
-		write(1, &c, 1);
-		bit_count = 0;
-		c = 0;
+		g_data.res <<= 1;
+		g_data.counter++;
 	}
-	kill(info->si_pid, SIGUSR1);
+	else if (sig == SIGUSR2)
+	{
+		g_data.res <<= 1;
+		g_data.res |= 1;
+		g_data.counter++;
+	}
+
+	if (g_data.counter == 8)
+	{
+		write(1, &g_data.res, 1);
+		g_data.counter = 0;
+		g_data.res = 0;
+	}
 }
 
-int	main(void)
+int	main()
 {
-	struct sigaction	sa;
+	int	pid;
 
-	ft_printf("Server PID: %d\n", getpid());
-	sa.sa_sigaction = handle_signal;
-	sa.sa_flags = SA_SIGINFO;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
-	while (1)
-		pause();
-	return (0);
+	pid = 0;
+	g_data.res = 0;
+	g_data.counter = 0;
+	pid = getpid();
+	ft_printf("%d\n", pid);
+	signal(SIGUSR1, sig_handler);
+	signal(SIGUSR2, sig_handler);
+	while(1);
 }
