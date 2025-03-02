@@ -19,12 +19,11 @@
 # include <signal.h>
 # include "ft_printf/ft_printf.h"
 
-typedef struct	s_data
+typedef struct s_data
 {
 	unsigned char	res;
 	int				counter;
 }				t_data;
-
 long	ft_atol(const char *str);
 
 #endif

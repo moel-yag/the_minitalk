@@ -49,5 +49,7 @@ int	main(int ac, char **av)
 	if (ac != 3)
 		return (0);
 	pid = ft_atol(av[1]);
+	if (kill(pid, 0) == -1)
+		return (1);
 	send_string_bits(av[2], pid);
 }

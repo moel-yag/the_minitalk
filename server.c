@@ -46,7 +46,7 @@ int	main(void)
 	ft_printf("%d\n", pid);
 	signal(SIGUSR1, signal_handler);
 	signal(SIGUSR2, signal_handler);
-	while (1);
-
-	return (0);	
+	while (1)
+		usleep(500);
+	return (0);
 }

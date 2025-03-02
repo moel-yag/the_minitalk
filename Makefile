@@ -18,11 +18,11 @@ all: $(NAME)
 	
 $(NAME): $(CLIENT) $(SERVER)
 
-$(CLIENT): $(OBJ_CLIENT)
+$(CLIENT): $(OBJ_CLIENT) utils.h
 	make -C $(PRINTF)
 	$(CC) $(CFLAGS) -o $(CLIENT) $(OBJ_CLIENT) $(FT_PRINTF)
 
-$(SERVER): $(OBJ_SERVER)
+$(SERVER): $(OBJ_SERVER) utils.h
 	make -C $(PRINTF)
 	$(CC) $(CFLAGS) -o $(SERVER) $(OBJ_SERVER) $(FT_PRINTF)
 
